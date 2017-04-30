@@ -9,7 +9,7 @@ var app = express();
 
 
 // mongodb connection
-mongoose.connect("mongodb://localhost:27017/bookworm");
+mongoose.connect("mongodb://heroku_2gqdt714:2osklgtr34eh3b80rjm9he6jnc@ds127321.mlab.com:27321/heroku_2gqdt714");
 var db = mongoose.connection;
 //mongo err
 db.on('error', console.error.bind(console, 'connection error: '));
