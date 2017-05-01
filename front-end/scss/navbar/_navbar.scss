@@ -1,0 +1,28 @@
+.navbar {
+    background: $white;
+    height: 3rem;
+    box-shadow: -1px -1px 5px 1px transparentize($black, .5);
+    .navbar-toggler {
+        color: $night-rider;
+    }
+    .navbar-nav {
+        .navbar-brand {
+            color: $night-rider;
+        }
+        .nav-items {
+            float: right;
+            position: relative;
+            right: 4rem;
+            height: 40px;
+            .nav-item {
+                color: $night-rider;
+            }
+        }
+        .nav-account {
+            float: right;
+            .avatar {
+                max-height: 40px;
+            }
+        }
+    }
+}

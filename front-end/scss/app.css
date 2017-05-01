@@ -1,0 +1,81 @@
+body {
+  font-family: Verdana, Helvetica, sans-serif;
+  color: #000; }
+
+main {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem; }
+
+main.home {
+  padding-top: 0; }
+  main.home .jumbotron-fluid {
+    position: relative;
+    height: 80vh;
+    padding-top: 3rem;
+    background: url("../images/jumbotron-bg.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    box-shadow: inset 0 0 0 100vh rgba(0, 0, 0, 0.7); }
+    main.home .jumbotron-fluid .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center; }
+    main.home .jumbotron-fluid .display-4 {
+      color: #fff;
+      font-size: 2rem; }
+      @media (min-width: 768px) and (orientation: portrait) {
+        main.home .jumbotron-fluid .display-4 {
+          font-size: 3.5rem; } }
+      @media (min-width: 768px) and (orientation: landscape) {
+        main.home .jumbotron-fluid .display-4 {
+          font-size: 2rem; } }
+      @media (min-width: 1024px) and (orientation: landscape) {
+        main.home .jumbotron-fluid .display-4 {
+          font-size: 3.5rem; } }
+    main.home .jumbotron-fluid .lead {
+      color: #fff;
+      font-size: 1rem; }
+      @media (min-width: 768px) and (orientation: portrait) {
+        main.home .jumbotron-fluid .lead {
+          font-size: 1.25rem; } }
+      @media (min-width: 768px) and (orientation: landscape) {
+        main.home .jumbotron-fluid .lead {
+          font-size: 1rem; } }
+      @media (min-width: 1024px) and (orientation: landscape) {
+        main.home .jumbotron-fluid .lead {
+          font-size: 1.25rem; } }
+    main.home .jumbotron-fluid .btn {
+      color: #fff;
+      border-color: #fff;
+      border-radius: 0; }
+    @media (min-width: 768px) and (orientation: landscape) {
+      main.home .jumbotron-fluid {
+        height: 60vh; } }
+    @media (min-width: 1024px) and (orientation: landscape) {
+      main.home .jumbotron-fluid {
+        height: 50vh; } }
+
+.navbar {
+  background: #fff;
+  height: 3rem;
+  box-shadow: -1px -1px 5px 1px rgba(0, 0, 0, 0.5); }
+  .navbar .navbar-toggler {
+    color: #333; }
+  .navbar .navbar-nav .navbar-brand {
+    color: #333; }
+  .navbar .navbar-nav .nav-items {
+    float: right;
+    position: relative;
+    right: 4rem;
+    height: 40px; }
+    .navbar .navbar-nav .nav-items .nav-item {
+      color: #333; }
+  .navbar .navbar-nav .nav-account {
+    float: right; }
+    .navbar .navbar-nav .nav-account .avatar {
+      max-height: 40px; }
+
+/*# sourceMappingURL=app.css.map */
