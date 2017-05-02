@@ -16,6 +16,7 @@ router.get('/profile', mid.requiresLogin, function(req, res, next) {
         if (error) {
           return next(error);
         } else {
+          res.location('/' + user.name);
           return res.render('profile', {title: 'Profile', name: user.name, favorite: user.favoriteBook});
         }
       })
@@ -50,7 +51,8 @@ router.post('/login', function(req, res, next) {
         return next(err);
       } else {
         req.session.userId = user._id;
-        return res.redirect('/profile');
+        const accountName = user.name.replace(' ', '-').toLowerCase();
+        return res.redirect('/' + accountName);
       }
     });
   } else {

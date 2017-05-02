@@ -5,7 +5,9 @@ const concat = require('gulp-concat');
 const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const maps = require('gulp-sourcemaps');
+const uglify = require('gulp-uglify');
 const cleanCSS = require('gulp-clean-css');
+const babel = require('gulp-babel');
 const del = require('del');
 const browserSync = require('browser-sync').create();
 const reload = browserSync.reload;
@@ -21,14 +23,14 @@ gulp.task('concatScripts', function() {
       'front-end/main.js'])
   .pipe(concat('app.js'))
   .pipe(babel({
-          presets: ['es2017']
+          presets: ['es2015']
       }))
-  .pipe(gulp.dest('front-end'));
+  .pipe(gulp.dest('./public/scripts'));
 });
 
 
 gulp.task('minifyScripts', ['concatScripts'], function() {
-  return gulp.src('front-end/app.js')
+  return gulp.src('public/scripts/app.js')
       .pipe(maps.init())
       .pipe(uglify())
       .on('error', swallowError)
