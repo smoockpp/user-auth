@@ -1,4 +1,4 @@
-.dc-wrapper {
+#dc-wrapper {
     position: fixed;
     top: 0;
     left: 0;
@@ -6,7 +6,7 @@
     bottom: 0;
     background: transparentize($black ,.3);
     z-index: 9999;
-    .dc-modal {
+    #dc-modal {
         max-width: 80%;
         position: absolute;
         top: 50%;
@@ -14,7 +14,7 @@
         transform: translate(-50%, -50%);
         background: $white-smoke;
         padding: 1rem 1rem;
-        .dc-modal-inner {
+        #dc-modal-inner {
             min-height: 150px;
             display: flex;
             flex-flow: row wrap;

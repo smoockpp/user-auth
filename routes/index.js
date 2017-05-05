@@ -3,6 +3,10 @@ var router = express.Router();
 var User = require('../models/user');
 var mid = require('../middleware');
 
+// GET /
+router.get('/', function(req, res, next) {
+  return res.render('index', { title: 'Home' });
+});
 
 // GET /profile
 router.get('/profile', mid.requiresLogin, function(req, res, next) {
@@ -16,7 +20,8 @@ router.get('/profile', mid.requiresLogin, function(req, res, next) {
         if (error) {
           return next(error);
         } else {
-          res.location('/' + user.name);
+          const accountName = user.name.replace(' ', '-').toLowerCase();
+          res.location(accountName);
           return res.render('profile', {title: 'Profile', name: user.name, favorite: user.favoriteBook});
         }
       })
@@ -52,7 +57,7 @@ router.post('/login', function(req, res, next) {
       } else {
         req.session.userId = user._id;
         const accountName = user.name.replace(' ', '-').toLowerCase();
-        return res.redirect('/' + accountName);
+        return res.redirect('/profile');
       }
     });
   } else {
@@ -106,10 +111,7 @@ router.post('/register', function(req, res, next) {
 });
 
 
-// GET /
-router.get('/', function(req, res, next) {
-  return res.render('index', { title: 'Home' });
-});
+
 
 // GET /about
 router.get('/about', function(req, res, next) {

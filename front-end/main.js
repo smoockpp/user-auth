@@ -1,20 +1,37 @@
 'use strict';
 
-
-
-class doubleCheck {
-    constructor(message, target, nextUrl) {
-        this.message = message;
-        this.target = target;
-        this.nextUrl = nextUrl;
-        this.toRemove = [];
+Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+    }
+    NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+        for(var i = this.length - 1; i >= 0; i--) {
+            if(this[i] && this[i].parentElement) {
+                this[i].parentElement.removeChild(this[i]);
+            }
+        }
     }
 
-    htmlTemplate() {
-        let html = `
-            <div class="dc-wrapper">
-                <div class="dc-modal">
-                    <div class="dc-modal-inner">
+class doubleCheck extends HTMLElement {
+    constructor() {
+        super();
+        this.message = '';
+        this.nextUrl = '';
+        this.toRemove = NodeSelector;
+        this.appendTo = NodeSelector;
+    }
+
+    set properties(obj) {
+        this.message = obj.message;
+        this.nextUrl = obj.nextUrl;
+        this.attachTo = obj.appendTo;
+    }
+
+    attachedCallback() {
+        this.innerHTML = `
+            <style>#dc-wrapper{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:9999}#dc-wrapper #dc-modal{max-width:80%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#eee;padding:1rem 1rem}#dc-wrapper #dc-modal #dc-modal-inner{min-height:150px;display:flex;flex-flow:row wrap;align-items:center}#dc-wrapper #dc-modal #dc-modal-inner .dc-warning-message{line-height:1.2;flex-basis:100%;text-rendering:optimizeLegibility}#dc-wrapper #dc-modal #dc-modal-inner .dc-button-proceed{background:0 0;font-size:1.2rem;color:#006004;padding:10px 15px;margin:.5rem .5rem;border:1px solid #006004;line-height:1;transition:.2s all ease-in-out}#dc-wrapper #dc-modal #dc-modal-inner .dc-button-proceed:hover{transform:scale(1.1);text-decoration:none}#dc-wrapper #dc-modal #dc-modal-inner .dc-button-cancel{background:0 0;font-size:1.2rem;color:#680800;padding:10px 15px;margin:.5rem .5rem;border:1px solid #680800;line-height:1;transition:.2s all ease-in-out;margin-left:auto}#dc-wrapper #dc-modal #dc-modal-inner .dc-button-cancel:hover{transform:scale(1.1);text-decoration:none}#dc-wrapper #dc-modal #dc-modal-inner .dc-button-close{position:absolute;top:0;right:0;padding:.5rem;font-size:1.5rem;line-height:1;color:#333;transition:.5s all ease-in-out}#dc-wrapper #dc-modal #dc-modal-inner .dc-button-close:hover{transform:scale(1.3);text-decoration:none}</style>
+            <div id="dc-wrapper">
+                <div id="dc-modal">
+                    <div id="dc-modal-inner">
                         <h4 class="dc-warning-message">${this.message}</h4>                        
                         <a class="dc-button-cancel" href="#">Cancel</a>
                         <a class="dc-button-proceed" href="${this.nextUrl}">Continue</a>
@@ -23,43 +40,38 @@ class doubleCheck {
                 </div>
             </div>
         `;
-        return html;
+        // const parent = this.getElementById('dc-wrapper').parentNode;
+        const btnCancel = this.querySelector('.dc-button-cancel');
+        const btnClose = this.querySelector('.dc-button-close');
+        function templateHTML(that) {
+            const parentEl = that.parentNode;
+            const parentParentEl = parentEl.parentNode;
+            const parentx3 = parentParentEl.parentNode;
+            console.log(parentx3.parentNode);
+            parentx3.parentNode.parentNode.removeChild(parentx3.parentNode);
+        }
+        btnCancel.addEventListener('click',function() {
+            templateHTML(this);
+        });
+        btnClose.addEventListener('click',function() {
+            templateHTML(this);
+        });
     }
 
-    init() {
-        this.target.innerHTML += this.htmlTemplate();
-        const that = this;
-        const dcCancel = document.getElementsByClassName('dc-button-cancel');
-        for (let i = 0; i < dcCancel.length; i++) {
-            dcCancel[i].addEventListener('click', function(e) {
-                e.preventDefault();
-                that.close();
-            });
-        }
-        const dcClose = document.getElementsByClassName('dc-button-close');
-        for (let i = 0; i < dcClose.length; i++) {
-            dcClose[i].addEventListener('click', function(e) {
-                e.preventDefault();
-                that.close();
-            });
-        }
-        const dcWrapper = document.getElementsByClassName('dc-wrapper');
-        for (let i = 0; i < dcWrapper.length; i++) {
-            this.toRemove.push(dcWrapper[i]);
-        }
-        
-        console.log(this.toRemove)
-    }
-    close() {
-        const that = this;
-        for (dc in this.toRemove) {
-            that.target.removeChild(this.toRemove[dc]);
-        }
-    }
 }
 
-const body = document.body;
+const Modal = document.registerElement('dc-modal', doubleCheck);
+var myModal = new Modal;
+myModal.properties = {
+    message: 'Do you want to delete your account?',
+    nextUrl: '/profile/delete'
+}
 
-let dc = new doubleCheck('Are you sure you want to delete your account?!', body, '/delete');
-
-
+const btnDanger = document.getElementsByClassName('btn-danger');
+console.log(btnDanger);
+for (let i = 0; i < btnDanger.length; i++) {
+    btnDanger[i].addEventListener('click', function(e) {
+        e.preventDefault();
+        document.body.appendChild(myModal);
+    });
+}
