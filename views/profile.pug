@@ -10,5 +10,5 @@ block content
               h2.favorite-book Favorite Book
               | #{favorite}
               br
-              form(method="post" action="/profile/delete")
-                  input.btn.btn-danger(type="submit" value="Delete")
+              form(method="POST" action="/profile/delete")
+                  input.btn.btn-danger(type="submit" name="#{userId}" value="Delete")

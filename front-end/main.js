@@ -18,12 +18,14 @@ class doubleCheck extends HTMLElement {
         this.nextUrl = '';
         this.toRemove = NodeSelector;
         this.appendTo = NodeSelector;
+        this.proceed = String;
     }
 
     set properties(obj) {
         this.message = obj.message;
         this.nextUrl = obj.nextUrl;
         this.attachTo = obj.appendTo;
+        this.proceed = obj.proceed;
     }
 
     attachedCallback() {
@@ -34,7 +36,7 @@ class doubleCheck extends HTMLElement {
                     <div id="dc-modal-inner">
                         <h4 class="dc-warning-message">${this.message}</h4>                        
                         <a class="dc-button-cancel" href="#">Cancel</a>
-                        <a class="dc-button-proceed" href="${this.nextUrl}">Continue</a>
+                        <a class="dc-button-proceed" href="${this.nextUrl}" data-continue="">Continue</a>
                         <a class="dc-button-close" href="#">&#10006;</a>
                     </div>
                 </div>
@@ -43,6 +45,7 @@ class doubleCheck extends HTMLElement {
         // const parent = this.getElementById('dc-wrapper').parentNode;
         const btnCancel = this.querySelector('.dc-button-cancel');
         const btnClose = this.querySelector('.dc-button-close');
+        const btnProceed = this.querySelector('.dc-button-proceed');
         function templateHTML(that) {
             const parentEl = that.parentNode;
             const parentParentEl = parentEl.parentNode;
@@ -56,6 +59,10 @@ class doubleCheck extends HTMLElement {
         btnClose.addEventListener('click',function() {
             templateHTML(this);
         });
+        btnProceed.addEventListener('click', function() {
+            this.setAttribute('data-continue', 'true');
+        });
+
     }
 
 }
@@ -64,7 +71,8 @@ const Modal = document.registerElement('dc-modal', doubleCheck);
 var myModal = new Modal;
 myModal.properties = {
     message: 'Do you want to delete your account?',
-    nextUrl: '/profile/delete'
+    nextUrl: '/profile/delete',
+    proceed: 'true'
 }
 
 const btnDanger = document.getElementsByClassName('btn-danger');
@@ -73,5 +81,7 @@ for (let i = 0; i < btnDanger.length; i++) {
     btnDanger[i].addEventListener('click', function(e) {
         e.preventDefault();
         document.body.appendChild(myModal);
+        const proceed = document.querySelector('.dc-button-proceed');
+        
     });
 }
