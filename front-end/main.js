@@ -76,12 +76,16 @@ myModal.properties = {
 }
 
 const btnDanger = document.getElementsByClassName('btn-danger');
+const state;
 console.log(btnDanger);
 for (let i = 0; i < btnDanger.length; i++) {
     btnDanger[i].addEventListener('click', function(e) {
+        state = e;
         e.preventDefault();
         document.body.appendChild(myModal);
         const proceed = document.querySelector('.dc-button-proceed');
-        
+        proceed.addEventListener('click', function() {
+            // if (this.getAttribute('data-continue') == )
+        });
     });
 }
